@@ -1,0 +1,85 @@
+services:
+  mysql:
+    image: mysql:8
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Maivannan@003
+      MYSQL_DATABASE: onlineshopping
+    ports:
+      - "3307:3307"
+    networks:
+      - microservices-network
+
+
+  eureka-server:
+    image: eureka-server:2.0
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+    container_name: eureka-server-new
+
+  user-service:
+    image: user-service:2.0
+    ports:
+      - "8085:8085"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3307/onlineshopping
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Maivannan@003
+    depends_on:
+      - eureka-server
+      - mysql
+    networks:
+      - microservices-network
+    container_name: user-service-new
+
+  product-service:
+    image: product-service:2.0
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3307/onlineshopping
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Maivannan@003
+    depends_on:
+      - eureka-server
+      - mysql
+    networks:
+      - microservices-network
+    container_name: product-service-new
+
+  category-service:
+    image: category-service:2.0
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3307/onlineshopping
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Maivannan@003
+    depends_on:
+      - eureka-server
+      - mysql
+    networks:
+      - microservices-network
+    container_name: category-service-new
+
+  api-gateway:
+    image: api-gateway:2.0
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+      - mysql
+    networks:
+      - microservices-network
+    container_name: api-gateway-new
+
+networks:
+  microservices-network:
+    driver: bridge

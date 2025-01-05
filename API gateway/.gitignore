@@ -1,0 +1,23 @@
+# Ignore IDE files
+.idea/
+
+# Ignore Maven target folder
+target/
+
+# Ignore log files
+*.log
+
+# Ignore class files (Java compiled files)
+*.class
+
+# Ignore the .mvn folder
+.mvn/
+
+# But don't ignore the Maven wrapper files
+!mvnw
+!mvnw.cmd
+!.mvn/wrapper/*
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db

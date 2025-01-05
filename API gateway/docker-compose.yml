@@ -1,0 +1,60 @@
+services:
+  eureka-server:
+    image: eureka-server:2.0
+    ports:
+      - "8761:8761"
+    networks:
+      - microservices-network
+    container_name: eureka-server
+
+  user-service:
+    image: user-service:2.0
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-network
+    container_name: user-service
+
+  product-service:
+    image: product-service:2.0
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-network
+    container_name: product-service
+
+  category-service:
+    image: category-service:2.0
+    ports:
+      - "8083:8083"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-network
+    container_name: category-service
+
+  api-gateway:
+    image: api-gateway:2.0
+    ports:
+      - "8080:8080"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka
+    depends_on:
+      - eureka-server
+    networks:
+      - microservices-network
+    container_name: api-gateway
+
+networks:
+  microservices-network:
+    driver: bridge
