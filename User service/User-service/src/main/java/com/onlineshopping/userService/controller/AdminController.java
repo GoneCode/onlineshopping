@@ -36,28 +36,24 @@ public class AdminController {
     }
 
     @GetMapping("/product/allProducts")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @SecurityRequirement(name = "bearerAuth")
     public ResponseEntity<List<ProductDTO>> getAllProducts(){
         return ResponseEntity.ok(productClient.getAllProducts());
     }
 
     @GetMapping("/product/categoryId/{categoryId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')" )
     public ResponseEntity<List<ProductDTO>> getProductsByCategoryId(@PathVariable String categoryId){
         List<ProductDTO> products = productClient.getProductsByCategoryId(categoryId);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/product/categoryName/{categoryName}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<ProductDTO>> getProductsByCategoryName(@PathVariable String categoryName){
         List<ProductDTO> products = productClient.getProductsByCategoryName(categoryName);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/product/productId/{productId}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     @Operation(
             summary = "Get Product by ID",
             description = "Retrieve a product's details by its ID.",
@@ -90,19 +86,16 @@ public class AdminController {
     }
 
     @GetMapping("/category/getAllCategory")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<List<CategoryDTO>> getAllCategories() {
         return ResponseEntity.ok(categoryClient.getAllCategories());
     }
 
     @GetMapping("/category/categoryId/{id}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<CategoryDTO> getCategoryById(@PathVariable String id) {
         return ResponseEntity.ok(categoryClient.getCategoryById(id));
     }
 
     @GetMapping("/category/categoryName/{name}")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('USER')")
     public ResponseEntity<CategoryDTO> getCategoryByName(@PathVariable String name) {
         return ResponseEntity.ok(categoryClient.getCategoryByName(name));
     }

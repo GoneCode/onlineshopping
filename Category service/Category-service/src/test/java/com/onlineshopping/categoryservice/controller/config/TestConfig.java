@@ -1,4 +1,4 @@
-package com.onlineshopping.categoryservice.config;
+package com.onlineshopping.categoryservice.controller.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
